@@ -6,15 +6,18 @@ public class PlayerControl : MonoBehaviour
 {
 	private CharacterController	_chara_control;
 	private	Vector3	_chara_velocity;
-	private float gravityValue = 9.81f;
-	private float jumpHeight = 5.0f;
-	float m_Speed;
+    private bool groundedPlayer;
+
+	private float gravityValue = -9.81f;
+    private float playerSpeed = 2.0f;
+	private float jumpHeight = 3.0f;
+
 	public bool is_p1;
     // Start is called before the first frame update
     void Start()
     {
     	_chara_control = GetComponent<CharacterController>();
-    	m_Speed = 5.0f;
+    	_chara_control.minMoveDistance = 0;
     }
 
     // Update is called once per frame
@@ -27,6 +30,32 @@ public class PlayerControl : MonoBehaviour
     {
     	//if (_chara_control.isGrounded && _chara_velocity.y < 0)
     		//_chara_velocity.y = 0f;
+
+        groundedPlayer = _chara_control.isGrounded;
+        if (groundedPlayer && _chara_velocity.y < 0)
+        {
+            _chara_velocity.y = 0f;
+        }
+
+        Vector3 move = new Vector3(Input.GetAxis("Horizontal_P1"), 0, Input.GetAxis("Vertical_P1"));
+        _chara_control.Move(move * Time.deltaTime * playerSpeed);
+
+        if (move != Vector3.zero)
+        {
+            gameObject.transform.forward = move;
+        }
+
+        // Changes the height position of the player..
+        if (Input.GetKeyDown(KeyCode.Space) && groundedPlayer)
+        {
+            _chara_velocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+        }
+
+        _chara_velocity.y += gravityValue * Time.deltaTime;
+        _chara_control.Move(_chara_velocity * Time.deltaTime);
+    
+
+        /*
     	Vector3 move;
 
     	if (is_p1)
@@ -34,6 +63,14 @@ public class PlayerControl : MonoBehaviour
 		else
 			move = new Vector3(Input.GetAxis("Horizontal_P2"), 0, Input.GetAxis("Vertical_P2"));
 
+
+        Vector3 _velocity.y += gravityValue * Time.deltaTime;
+        _chara_control.Move(move * Time.deltaTime);
+
+        if (move != Vector3.zero)
+            transform.forward = move;
+
+        
 		if (Input.GetKeyDown(KeyCode.Space) && _chara_control.isGrounded)
         {
             move.y = 50f;
@@ -56,6 +93,6 @@ public class PlayerControl : MonoBehaviour
         }
         // Changes the height position of the player..
         Debug.Log(_chara_control.isGrounded);
-        
+        */
     }
 }
