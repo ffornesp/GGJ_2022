@@ -7,6 +7,7 @@ TagManager:
   - Terrain
   - Slow_Trap
   - Coin
+  - Player_hit
   layers:
   - Default
   - TransparentFX
