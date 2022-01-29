@@ -5,14 +5,13 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour
 {
     public bool is_p1;
-    public CameraControl camera_control;
 
     private bool _grounded_player;
     private CharacterController _chara_control;
     private Vector3 _chara_velocity;
 
 	private float _gravity = -50f;
-    private float _speed = 8.0f;
+    public float _speed = 8.0f;
 	private float _jump_speed = 2.0f;
     private float _speed_multiplier = 1f;
 
