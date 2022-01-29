@@ -34,17 +34,17 @@ public class CameraControl : MonoBehaviour
     	camera_target.transform.position = _middle;
     	distance_cam_target = Vector3.Distance(_camera.transform.position, _middle);
 
-    	transform.position = new Vector3(_middle.x, 10f, _middle.z - 10f);
+    	transform.position = new Vector3(_middle.x, 15f, _middle.z - 5f);
 
     	if (_distance > 15 && _distance < 60){
     		if (_distance - _previous_distance != 0){
-    			if (!_is_zooming && distance_cam_target < 45)
-	    				_camera.transform.Translate(Vector3.forward * -5f * Time.deltaTime);
+    			if (!_is_zooming && distance_cam_target < 50)
+	    				_camera.transform.Translate(Vector3.forward * -8f * Time.deltaTime);
     			if (_is_zooming && distance_cam_target > 10)
     				_camera.transform.Translate(Vector3.forward * 5f * Time.deltaTime);
     		}
     	}
-    	else if (_distance <= 15f && distance_cam_target > 15f)
+    	else if (_distance <= 15f && distance_cam_target > 20f)
     		_camera.transform.Translate(Vector3.forward * 8f * Time.deltaTime);
 
     	_previous_distance = _distance;
