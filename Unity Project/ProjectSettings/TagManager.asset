@@ -10,6 +10,12 @@ TagManager:
   - Player1_hit
   - Player2_hit
   - Player_hit
+  - Boost_Powerup
+  - Coins
+  - Boosts
+  - Jump_Powerup
+  - Traps
+  - Pinchos
   layers:
   - Default
   - TransparentFX
