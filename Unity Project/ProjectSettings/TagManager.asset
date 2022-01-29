@@ -7,6 +7,8 @@ TagManager:
   - Terrain
   - Slow_Trap
   - Coin
+  - Player1_hit
+  - Player2_hit
   - Player_hit
   layers:
   - Default

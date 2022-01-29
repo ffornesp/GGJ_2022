@@ -18,10 +18,13 @@ public class PlayerControl : MonoBehaviour
 	private float _jump_speed = 2.0f;
     private float _speed_multiplier = 1f;
 
+    private Animator _animator;
+
     void Start()
     {
     	_chara_control = GetComponent<CharacterController>();
         _box_col = transform.GetChild(1).gameObject;
+        _animator = transform.GetChild(0).gameObject.transform.GetChild(0).transform.GetComponent<Animator>();
     	_chara_control.minMoveDistance = 0;
         coins = 0;
         _init_pos = transform.position;
@@ -32,6 +35,11 @@ public class PlayerControl : MonoBehaviour
     {
         if (GameManager.is_playing)
             player_movement();
+        else
+        {
+            _animator.SetBool("Is_moving", false);
+            _animator.SetBool("Is_grounded", true);
+        }
     }
 
     void player_movement()
@@ -39,7 +47,11 @@ public class PlayerControl : MonoBehaviour
         Vector3 move = Vector3.zero;
 
         _grounded_player = _chara_control.isGrounded;
-        
+        if (_grounded_player)
+            _animator.SetBool("Is_grounded", true);
+        else
+            _animator.SetBool("Is_grounded", false);
+
         if (_grounded_player && _chara_velocity.y < 0)
             _chara_velocity.y = 0f;
         
@@ -60,6 +72,10 @@ public class PlayerControl : MonoBehaviour
         if (is_p1 && Input.GetKeyDown(KeyCode.RightShift) && _grounded_player)
             _chara_velocity.y += Mathf.Sqrt(_jump_speed * -3.0f * _gravity * _speed_multiplier);
 
+        if (move != Vector3.zero)
+            _animator.SetBool("Is_moving", true);
+        else
+            _animator.SetBool("Is_moving", false);
         _chara_velocity.y +=  _gravity * Time.deltaTime;
         _chara_control.Move(_chara_velocity * Time.deltaTime);
     }
