@@ -94,7 +94,7 @@ public class PlayerControl : MonoBehaviour
 
         //Boosts
         if (col.gameObject.tag == "Boost_Powerup"){
-            _speed_multiplier *= 1.5f;
+            _speed_multiplier *= 1.235f;
             col.gameObject.SetActive(false);
             StartCoroutine(start_speed_countdown());
         }
@@ -104,8 +104,6 @@ public class PlayerControl : MonoBehaviour
             col.gameObject.SetActive(false);
             StartCoroutine(start_jump_countdown());
         }
-
-
 
         if (col.gameObject.tag == "Coin" && is_runner)
         {
@@ -121,7 +119,6 @@ public class PlayerControl : MonoBehaviour
             soft_reset();
             Debug.Log("Player 2 hit");
         }
-
     }
 
     IEnumerator start_speed_countdown(){
@@ -157,6 +154,4 @@ public class PlayerControl : MonoBehaviour
         if (col.gameObject.tag == "Slow_Trap")
             _speed_multiplier = 1f;
     }
-
-
 }

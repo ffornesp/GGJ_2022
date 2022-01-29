@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     {
         _timer += Time.deltaTime;
         if (_timer > 2f && _timer < 2.5f)
-        {
+        {	
         	Debug.Log("PLAY!");
         	is_playing = true;
         }
