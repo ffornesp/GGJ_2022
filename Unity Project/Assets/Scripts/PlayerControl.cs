@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-	private CharacterController	_chara_control;
+    public bool is_p1;
+    public CameraControl camera_control;
 
-	private	Vector3	_chara_velocity;
-    private bool grounded_Player;
-	private float gravityValue = -50f;
-    private float playerSpeed = 8.0f;
-	private float jumpHeight = 2.0f;
+    private bool _grounded_player;
+    private CharacterController _chara_control;
+    private Vector3 _chara_velocity;
 
-	public bool is_p1;
+	private float _gravity = -50f;
+    private float _speed = 8.0f;
+	private float _jump_speed = 2.0f;
+    private float _speed_multiplier = 1f;
 
     void Start()
     {
@@ -29,9 +31,9 @@ public class PlayerControl : MonoBehaviour
     {
         Vector3 move = Vector3.zero;
 
-        grounded_Player = _chara_control.isGrounded;
+        _grounded_player = _chara_control.isGrounded;
         
-        if (grounded_Player && _chara_velocity.y < 0)
+        if (_grounded_player && _chara_velocity.y < 0)
             _chara_velocity.y = 0f;
         
         if (is_p1)
@@ -39,20 +41,37 @@ public class PlayerControl : MonoBehaviour
         else
             move = new Vector3(Input.GetAxis("Horizontal_P2"), 0, Input.GetAxis("Vertical_P2"));
 
-        _chara_control.Move(move * Time.deltaTime * playerSpeed);
+        _chara_control.Move(move * Time.deltaTime * _speed * _speed_multiplier);
 
         if (move != Vector3.zero)
         {
             gameObject.transform.forward = move;
         }
 
-        if (!is_p1 && Input.GetKeyDown(KeyCode.Space) && grounded_Player)
-            _chara_velocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
-        if (is_p1 && Input.GetKeyDown(KeyCode.RightShift) && grounded_Player)
-            _chara_velocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+        if (!is_p1 && Input.GetKeyDown(KeyCode.Space) && _grounded_player)
+            _chara_velocity.y += Mathf.Sqrt(_jump_speed * -3.0f * _gravity * _speed_multiplier);
+        if (is_p1 && Input.GetKeyDown(KeyCode.RightShift) && _grounded_player)
+            _chara_velocity.y += Mathf.Sqrt(_jump_speed * -3.0f * _gravity * _speed_multiplier);
 
-        _chara_velocity.y +=  gravityValue * Time.deltaTime;
+        _chara_velocity.y +=  _gravity * Time.deltaTime;
         _chara_control.Move(_chara_velocity * Time.deltaTime);
-        
     }
+
+    public Vector3 GetCurrentPosition(){
+        return (transform.position);
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Slow_Trap")
+            _speed_multiplier = 0.5f;
+    }
+
+    void    OnTriggerExit(Collider col)
+    {
+        if (col.gameObject.tag == "Slow_Trap")
+            _speed_multiplier = 1f;
+    }
+
+
 }
