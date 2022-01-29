@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour
 {
     public bool is_p1;
+    public bool is_runner;
+    public int coins;
 
     private bool _grounded_player;
     private CharacterController _chara_control;
@@ -19,6 +21,7 @@ public class PlayerControl : MonoBehaviour
     {
     	_chara_control = GetComponent<CharacterController>();
     	_chara_control.minMoveDistance = 0;
+        coins = 0;
     }
 
     void Update()
@@ -64,6 +67,11 @@ public class PlayerControl : MonoBehaviour
     {
         if (col.gameObject.tag == "Slow_Trap")
             _speed_multiplier = 0.5f;
+        if (col.gameObject.tag == "Coin" && is_runner)
+            {
+                col.gameObject.SetActive(false);
+                coins++;
+            }
     }
 
     void    OnTriggerExit(Collider col)
