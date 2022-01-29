@@ -6,7 +6,6 @@ public class PlayerControl : MonoBehaviour
 {
     public bool is_p1;
     public bool is_runner;
-    public int coins;
     public Vector3   _init_pos;
 
     private bool _grounded_player;
@@ -27,7 +26,6 @@ public class PlayerControl : MonoBehaviour
         _box_col = transform.GetChild(1).gameObject;
         _animator = transform.GetChild(0).gameObject.transform.GetChild(0).transform.GetComponent<Animator>();
     	_chara_control.minMoveDistance = 0;
-        coins = 0;
         _init_pos = transform.position;
         soft_reset();
     }
@@ -108,7 +106,10 @@ public class PlayerControl : MonoBehaviour
         if (col.gameObject.tag == "Coin" && is_runner)
         {
             col.gameObject.transform.parent.gameObject.SetActive(false);
-            coins++;
+            if (is_p1)
+                GameManager.p1_coin_count++;
+            else
+                GameManager.p2_coin_count++;
         }
 
         if (col.gameObject.tag == "Player_hit" && !is_runner)
