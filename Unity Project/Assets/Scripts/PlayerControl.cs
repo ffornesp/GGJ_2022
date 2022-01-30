@@ -7,6 +7,7 @@ public class PlayerControl : MonoBehaviour
     public bool is_p1;
     public bool is_runner;
     public Vector3   _init_pos;
+    private Quaternion _init_rot;
 
     private bool _grounded_player;
     private CharacterController _chara_control;
@@ -18,7 +19,8 @@ public class PlayerControl : MonoBehaviour
     private float _speed_multiplier = 1f;
     private float _jump_multiplier = 1f;
 
-    private Animator _animator;
+    private Animator _animator_knight;
+    private Animator _animator_goblin;
 
     private float   _timer_icon = 0;
 
@@ -26,9 +28,11 @@ public class PlayerControl : MonoBehaviour
     {
     	_chara_control = GetComponent<CharacterController>();
         _box_col = transform.GetChild(1).gameObject;
-        _animator = transform.GetChild(0).gameObject.transform.GetChild(0).transform.GetComponent<Animator>();
+        _animator_knight = transform.GetChild(0).gameObject.transform.GetChild(0).transform.GetComponent<Animator>();
+        _animator_goblin = transform.GetChild(0).gameObject.transform.GetChild(1).transform.GetChild(0).transform.GetComponent<Animator>();
     	_chara_control.minMoveDistance = 0;
         _init_pos = transform.position;
+        _init_rot = transform.rotation;
         soft_reset();
     }
 
@@ -41,8 +45,10 @@ public class PlayerControl : MonoBehaviour
             player_movement();
         else
         {
-            _animator.SetBool("Is_moving", false);
-            _animator.SetBool("Is_grounded", true);
+            _animator_knight.SetBool("Is_moving", false);
+            _animator_knight.SetBool("Is_grounded", true);
+            _animator_goblin.SetBool("Is_moving", false);
+            _animator_goblin.SetBool("Is_grounded", true);
         }
     }
 
@@ -52,9 +58,15 @@ public class PlayerControl : MonoBehaviour
 
         _grounded_player = _chara_control.isGrounded;
         if (_grounded_player)
-            _animator.SetBool("Is_grounded", true);
+        {
+            _animator_knight.SetBool("Is_grounded", true);
+            _animator_goblin.SetBool("Is_grounded", true);
+        }
         else
-            _animator.SetBool("Is_grounded", false);
+        {
+            _animator_knight.SetBool("Is_grounded", false);
+            _animator_goblin.SetBool("Is_grounded", false);
+        }
 
         if (_grounded_player && _chara_velocity.y < 0)
             _chara_velocity.y = 0f;
@@ -63,7 +75,11 @@ public class PlayerControl : MonoBehaviour
             move = new Vector3(Input.GetAxis("Horizontal_P1"), 0, Input.GetAxis("Vertical_P1"));
         else
             move = new Vector3(Input.GetAxis("Horizontal_P2"), 0, Input.GetAxis("Vertical_P2"));
-
+        if ((move.x == 1 || move.x == -1) && (move.z == 1 || move.z == -1))
+        {   
+            move.x /= 1.5f;
+            move.z /= 1.5f;
+        }
         _chara_control.Move(move * Time.deltaTime * _speed * _speed_multiplier);
 
         if (move != Vector3.zero)
@@ -77,9 +93,15 @@ public class PlayerControl : MonoBehaviour
             _chara_velocity.y += Mathf.Sqrt(_jump_speed * -3.0f * _gravity * _speed_multiplier);
 
         if (move != Vector3.zero)
-            _animator.SetBool("Is_moving", true);
+        {
+            _animator_knight.SetBool("Is_moving", true);
+            _animator_goblin.SetBool("Is_moving", true);
+        }
         else
-            _animator.SetBool("Is_moving", false);
+        {
+            _animator_knight.SetBool("Is_moving", false);
+            _animator_goblin.SetBool("Is_moving", false);
+        }
         _chara_velocity.y +=  _gravity * Time.deltaTime;
         _chara_control.Move(_chara_velocity * Time.deltaTime * _jump_speed);
     }
@@ -123,7 +145,6 @@ public class PlayerControl : MonoBehaviour
             col.gameObject.transform.parent.GetComponent<PlayerControl>().is_runner = false;
             col.gameObject.transform.parent.GetComponent<PlayerControl>().soft_reset();
             soft_reset();
-            Debug.Log("Player 2 hit");
         }
     }
 
@@ -149,10 +170,23 @@ public class PlayerControl : MonoBehaviour
     {
         GameManager.is_playing = false;
         transform.position = _init_pos;
+        transform.rotation = _init_rot;
+        _timer_icon = 0;
+        transform.GetChild(2).gameObject.SetActive(true);
         if (is_runner)
             _box_col.SetActive(true);
         else
             _box_col.SetActive(false);
+        if (is_runner)
+        {
+            transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(0).transform.GetChild(1).gameObject.SetActive(true);
+        }
+        else
+        {
+            transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(true);
+            transform.GetChild(0).transform.GetChild(1).gameObject.SetActive(false);
+        }
     }
 
     void    OnTriggerExit(Collider col)
