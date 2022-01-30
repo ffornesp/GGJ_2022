@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 	public static bool is_playing = false;
-    public Text p1_coin_text, p2_coin_text;
+    public Text p1_coin_text, p2_coin_text, p3_coin_text;
     public static int p1_coin_count, p2_coin_count;
     public Sprite[] countdown_sprites;
     public Image    countdown_img;
@@ -16,21 +16,23 @@ public class GameManager : MonoBehaviour
     private float _countdown_timer = 0;
 	private GameObject _boosts;
     private GameObject _coins;
-    private int _win_coin_amount = 6;
+    public int _win_coin_amount = 6;
     // Start is called before the first frame update
     void Start()
     {
     	_boosts = GameObject.FindGameObjectWithTag("Boosts");
         _coins = GameObject.FindGameObjectWithTag("Coins");
+        _win_coin_amount = _coins.transform.childCount;
         p1_coin_count = 0;
         p2_coin_count = 0;
+        p3_coin_text.text = "WINNING SCORE: " + _win_coin_amount;
     }
 
     // Update is called once per frame
     void Update()
     {
-        p1_coin_text.text = " Player 1 coins: " + p1_coin_count;
-        p2_coin_text.text = " Player 2 coins: " + p2_coin_count;
+        p1_coin_text.text = "P1: " + p1_coin_count;
+        p2_coin_text.text = "P2: " + p2_coin_count;
         _timer += Time.deltaTime;
 
         countdown_img.gameObject.SetActive(true);
