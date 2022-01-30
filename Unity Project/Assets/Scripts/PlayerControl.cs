@@ -20,6 +20,8 @@ public class PlayerControl : MonoBehaviour
 
     private Animator _animator;
 
+    private float   _timer_icon = 0;
+
     void Start()
     {
     	_chara_control = GetComponent<CharacterController>();
@@ -32,6 +34,9 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+        _timer_icon += Time.deltaTime;
+        if (_timer_icon > 3f && _timer_icon < 5f)
+            transform.GetChild(2).gameObject.SetActive(false);
         if (GameManager.is_playing)
             player_movement();
         else

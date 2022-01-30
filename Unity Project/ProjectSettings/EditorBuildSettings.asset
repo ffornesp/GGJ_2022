@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Arena_base.unity
     guid: 301fce5f8816541b9b7d8241c8c16e8b
+  - enabled: 1
+    path: Assets/Scenes/Level_Pol.unity
+    guid: df2489dcfe4f141afa3eb0a6dc9a5df5
   m_configObjects: {}
