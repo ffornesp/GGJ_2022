@@ -145,6 +145,10 @@ public class PlayerControl : MonoBehaviour
             col.gameObject.transform.parent.GetComponent<PlayerControl>().is_runner = false;
             col.gameObject.transform.parent.GetComponent<PlayerControl>().soft_reset();
             soft_reset();
+        } else if (col.gameObject.tag == "Player_hit"){
+            is_runner = false;
+            col.gameObject.transform.parent.GetComponent<PlayerControl>().is_runner = true;
+            col.gameObject.transform.parent.GetComponent<PlayerControl>().soft_reset();
         }
     }
 
