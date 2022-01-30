@@ -141,9 +141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 203b114c6891c49019b8ad25e021355c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  is_p1: 0
-  is_runner: 0
-  coins: 0
+  is_p1: 1
+  is_runner: 1
   _init_pos: {x: 0, y: 0, z: 0}
   _speed: 8
 --- !u!143 &1411039426

@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
         p2_coin_text.text = " Player 2 coins: " + p2_coin_count;
         _timer += Time.deltaTime;
 
-        countdown_img.transform.parent.gameObject.SetActive(true);
+        countdown_img.gameObject.SetActive(true);
         _countdown_timer += Time.deltaTime;
         if (_countdown_timer < 1f)
             countdown_img.sprite = countdown_sprites[0];
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
         else if (_countdown_timer > 2f && _countdown_timer < 3f)
             countdown_img.sprite = countdown_sprites[2];
         else    
-            countdown_img.transform.parent.gameObject.SetActive(false);
+            countdown_img.gameObject.SetActive(false);
 
         if (_timer > 2.9f && _timer < 3.1f)
         {	
