@@ -1,10 +1,12 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - BgMusic
     - CameraControl
     - GameManager
     - MenuController
     - PlayerControl
+    - SoundFx
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
     UnityEditor.Graphs.dll:
@@ -45,6 +47,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
+    - Class: 54
+      Script: {instanceID: 0}
     - Class: 64
       Script: {instanceID: 0}
     - Class: 65
@@ -52,6 +56,12 @@ ScriptsOnlyBuild:
     - Class: 74
       Script: {instanceID: 0}
     - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 89
       Script: {instanceID: 0}
     - Class: 91
       Script: {instanceID: 0}
@@ -105,6 +115,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 224
       Script: {instanceID: 0}
+    - Class: 258
+      Script: {instanceID: 0}
     Assets/Scenes/Level_Pol.unity:
     - Class: 1
       Script: {instanceID: 0}
@@ -133,6 +145,10 @@ ScriptsOnlyBuild:
     - Class: 74
       Script: {instanceID: 0}
     - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
       Script: {instanceID: 0}
     - Class: 89
       Script: {instanceID: 0}
@@ -176,6 +192,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 196
       Script: {instanceID: 0}
+    - Class: 198
+      Script: {instanceID: 0}
+    - Class: 199
+      Script: {instanceID: 0}
     - Class: 213
       Script: {instanceID: 0}
     - Class: 222
@@ -201,6 +221,12 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 89
+      Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 108
@@ -221,6 +247,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 2838}
     - Class: 114
       Script: {instanceID: 3324}
+    - Class: 114
+      Script: {instanceID: 154120}
+    - Class: 114
+      Script: {instanceID: 154126}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -630,7 +660,7 @@ ScriptsOnlyBuild:
     className: TMP_Settings
   - hash:
       serializedVersion: 2
-      Hash: 20bd07b0fd7a22a209c5e08a5558a2d2
+      Hash: 366747d437d6d413af598e45d7135055
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerControl
@@ -682,6 +712,18 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: TouchInputModule
+  - hash:
+      serializedVersion: 2
+      Hash: 538c762441b60ac6cde3819170ab28fb
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BgMusic
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SoundFx
   platform: 2
   scenePathNames:
   - Assets/Scenes/Main_Menu.unity

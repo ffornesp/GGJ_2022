@@ -7,20 +7,30 @@ public class PlayerControl : MonoBehaviour
     public bool is_p1;
     public bool is_runner;
     public Vector3   _init_pos;
+
+    public AudioClip coin_fx;
+
     private Quaternion _init_rot;
 
     private bool _grounded_player;
+
     private CharacterController _chara_control;
+
     private Vector3 _chara_velocity;
+
     private GameObject _box_col;
+    public GameObject[] _particle_obj;
+
 	private float _gravity = -50f;
-    public float _speed = 8.0f;
+    private float _speed = 8.0f;
 	private float _jump_speed = 2.0f;
     private float _speed_multiplier = 1f;
     private float _jump_multiplier = 1f;
 
     private Animator _animator_knight;
     private Animator _animator_goblin;
+
+    private AudioSource _audio_source;
 
     private float   _timer_icon = 0;
 
@@ -30,9 +40,12 @@ public class PlayerControl : MonoBehaviour
         _box_col = transform.GetChild(1).gameObject;
         _animator_knight = transform.GetChild(0).gameObject.transform.GetChild(0).transform.GetComponent<Animator>();
         _animator_goblin = transform.GetChild(0).gameObject.transform.GetChild(1).transform.GetChild(0).transform.GetComponent<Animator>();
+        _audio_source = GetComponent<AudioSource>();
     	_chara_control.minMoveDistance = 0;
         _init_pos = transform.position;
         _init_rot = transform.rotation;
+        _particle_obj[0].SetActive(false);
+        _particle_obj[1].SetActive(false);
         soft_reset();
     }
 
@@ -133,6 +146,8 @@ public class PlayerControl : MonoBehaviour
         if (col.gameObject.tag == "Coin" && is_runner)
         {
             col.gameObject.transform.parent.gameObject.SetActive(false);
+            _audio_source.clip = coin_fx;
+            _audio_source.Play();
             if (is_p1)
                 GameManager.p1_coin_count++;
             else
@@ -154,20 +169,24 @@ public class PlayerControl : MonoBehaviour
 
     IEnumerator start_speed_countdown(){
         int counter = 2;
+        _particle_obj[0].SetActive(true);
         while (counter > 0){
             yield return new WaitForSeconds(1);
             counter--;
         }
         _speed_multiplier = 1f;
+        _particle_obj[0].SetActive(false);
     }
 
     IEnumerator start_jump_countdown(){
         int counter = 2;
+        _particle_obj[1].SetActive(true);
         while (counter > 0){
             yield return new WaitForSeconds(1);
             counter--;
         }
         _jump_multiplier = 1f;
+        _particle_obj[1].SetActive(false);
     }
 
     public void soft_reset()
